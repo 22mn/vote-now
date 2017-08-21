@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Profile</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	<link rel="shortcut icon" href="https://res.cloudinary.com/mgjean/image/upload/v1503292022/pen.ico">
+  	<link rel="stylesheet" href="public/css/main.css">
+</head>
+<body>
+	<div id="navigate"></div>
+	<div class="container">
+		<div class= "well well-md">
+			<span class="pro-lab">Name :</span><span class="pro-val"><a target="_blank" href="https://twitter.com/{{dname}}">{{name}}</a></span>
+			<span class="pro-lab">ID :</span><span class="pro-val"> {{id}}</span>
+			<span class="pro-lab">Location :</span><span class="pro-val"> {{location}}</span>
+		</div>
+	</div>
+	<div class= "container forpanel">
+    	<p class="pnl-hder">my polls</p>
+    	<div class="panel-group" id="panelGroup1"></div>	
+  	</div>
+  	<button class="btn btn-default" id="info" >
+		<span class="glyphicon glyphicon-info-sign"></span>
+	</button>
+<script src="public/js/helper.js"></script>
+<script>
+	var pollList = [], topList = [];             // pollIds and topics
+	
+	$.get("public/views/navi.html",function(data){ // navibar load
+		$("#navigate").replaceWith(data);
+	});
+
+	// check user created vote to display in profile 
+	$.ajax({
+		url: '/api/polls',
+		type: 'GET',
+		dataType: 'json',
+		success: function(data){
+			for (var i = 0; i < data.length;i++){
+				if (data[i].creatorId === "{{id}}"){
+					if(!data[i].topic){continue;}
+					pollList.push(data[i]._id);
+					topList.push(data[i].topic);
+				}
+				
+			}
+			return pollList,topList;
+		}
+	});
+	function panel(){
+		pollPanel("#panelGroup1",pollList,topList);
+	}
+	setTimeout(panel,1500);
+		
+</script>
+</body>
+</html>

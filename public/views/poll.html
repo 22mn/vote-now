@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Poll</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+  	<link rel="shortcut icon" href="https://res.cloudinary.com/mgjean/image/upload/v1503292022/pen.ico">
+  	<link rel="stylesheet" href="/public/css/main.css"> 
+  	<!-- prepend "/" required! -->
+</head>
+<body>
+	<div id="navi"></div>
+		<blockquote id="blkqut"></blockquote>
+	<div class="container">
+		<div class="col-xs-5" >
+			<div id="entry"><br>
+				<form id="form2">	   
+            <span class="f2-lab"> Topic : </span><span class="pro-val">{{title}}</span>
+ 						<br><br>
+				</form>
+				<button type="button" class="btn btn-default" id="submit1">Submit</button>
+			</div>
+		</div>
+		<div class="col-xs-7" id="display">
+			<canvas id="chart" width="375px" height="375px"></canvas>
+		</div>
+	</div>
+	<button class="btn btn-default" id="info" >
+    <span class="glyphicon glyphicon-info-sign"></span>
+  </button>
+<script src="/public/js/helper.js"></script>
+<script>
+	
+	$.get("/public/views/navi.html",function(data){   // navibar load
+		$("#navi").replaceWith(data);
+	});
+
+	if ("{{user}}" === "false"){                   // log in check
+		$("#submit1").prop('disabled', true);
+		$("#submit1").prop("title","Login required!");
+	}
+
+	var name = "{{optsList}}";                     // for radio inputs  
+	var count = "{{optsCount}}";                   // vote count for each opts 
+
+	options = name.split(",");  
+	counts = count.split(",");
+
+	chart("chart","{{title}}",options,counts);      // display chart
+
+	check(options);                                 // create radio options;
+	
+	var user_id = "{{user_id}}", poll_id = "{{poll_id}}";
+	user_id = Number(user_id);
+	$("#submit1").click(function(){              // selected value fetch
+		var value = $("input[type=radio][name=option]:checked","#form2").val();	
+		newPoll("/user/vote",{"optsName":value,"_id":poll_id,"voterId":user_id});
+	})
+
+
+	// check userId(twitterId) in voterId List 
+	$.ajax({
+		url: '/api/polls',
+		type: 'GET',
+		dataType: 'json',
+		success:function(data){
+			var field = [];
+			for (var i = 0 ; i < data.length; i++){
+				if (data[i]._id === poll_id ){
+					field = data[i].voterId;
+					if (field.indexOf(user_id) > -1){
+						$("#submit1").prop('disabled', true);
+						$("#submit1").prop("title","You have already voted!");
+						return true;}
+					}
+				}
+			return false;
+		}
+	});
+
+	$.ajax({                // random quotes from json file
+		url: 'https://rawgit.com/mgjean/cb234f6400c450800b62bf098e998f3a/raw/d6a86f9024ba34a3c39d88f1d3f0ef3acef7e9ba/vote.json',
+		type: 'GET',
+		dataType: 'json',
+		success:function(data){
+			var rand = Math.floor(Math.random() * data.length);
+      $("#blkqut").html("<p>"+data[rand][rand].quote+"</p><footer>"+
+      	data[rand][rand].author+"</footer>");
+			}
+	});
+	
+
+	
+
+</script>
+</body>
+</html>

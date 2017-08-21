@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vote Now!</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+  <link rel="shortcut icon" href="https://res.cloudinary.com/mgjean/image/upload/v1503292022/pen.ico">
+  <link rel="stylesheet" href="public/css/main.css">
+
+
+</head>
+<body>
+	<div id="navi"></div>
+	<header>Welcome <span id="name">Stranger</span>!
+		<button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal" id="close">Create New Poll</button>
+	</header>
+	
+	<div class="container">
+    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+    
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button"  class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="mhead">Create New Poll</h4>
+        </div>
+      
+      <div class="modal-body">
+        <form id="form1">
+          <div class="input-group">    
+            <span class="input-group-addon"> Topic</span>
+            <input type="text" class="form-control" id="topic" maxlength="130" name="topic" style="max-width:670px" autocomplete="off" required>
+          </div>
+          <br>
+          <div class="input-group">
+            <span class="input-group-addon">Option</span>
+            <input id="option" type="text" class="form-control" maxlength="60" style="max-width:330px" autocomplete="off" required>
+          </div>
+          <br>
+          <button type="button" class="btn btn-default" id="create">Add Option</button>
+          <button type="button" class="btn btn-default" id="submit">Create Poll</button>
+          <button type="button" class="btn btn-default" id="reset">Reset</button>
+          <br>
+          <br>
+          <ul id="lst" class="list-inline"></ul>   
+        </form>
+        </div>  
+      </div>
+    </div>   
+    </div>
+  </div>
+
+  <div class= "container forpanel">
+    <p class="pnl-hder">current polls</p>
+    <div class="panel-group" id="panelGroup"></div>
+	</div>
+
+  <button class="btn btn-default" id="info" >
+    <span class="glyphicon glyphicon-info-sign"></span>
+  </button>
+  
+
+  <script src="/public/js/checker.js"></script>
+	<script src="public/js/helper.js"></script>
+	<script>
+  // load navigation bar from external html file
+  $.get("public/views/navi.html",function(data){
+    $("#navi").replaceWith(data);
+  });
+  
+  // collect all poll options
+  var optsList =[];
+  var optsAry  = [];
+
+  // greeting message change to username after logged in
+	document.addEventListener("DOMContentLoaded",function(event){
+		var call = "{{name}}" || "Stranger";           // greeting username 
+		$("#name").text(call);                          
+     if (call === "Stranger"){                     // if not login
+       $("#close").prop('disabled', true);         //disabled create button
+       $("#close").prop("title","Login required!") //hover tooltip
+      }
+		});
+
+  // poll options list handler
+  $("#create").click(()=>{
+    var opts= $("#option").val();
+    if (!opts) {return;}                            // blank field ignore 
+    if (optsList.indexOf(opts) > -1){               // same options ignore
+      return;
+    }
+    optsList.push(opts);                             // push into array
+    optsAry.push({"optsName":opts,"optsCount":0});   // allVote field
+    $("#option").val("");  
+    if(opts){
+      $("#lst").append("<li><span class='glyphicon glyphicon-record'></span>"+opts+"</li>")
+    }
+    else{ return;}
+    });
+
+  $("#submit").prop('disabled', true);           // disabled on start
+  blankCheck("#topic","#submit");                // blank topic check
+  blankCheck("#option","#create");               // blank option check
+  $("#create").prop('disabled', true);           // disabled on start
+
+    // poll store in db
+  $("#submit").click(()=>{              // Poll Schema polls.js
+    var poll = {
+          "topic": $("#topic").val(),
+          "allVote": optsAry,
+          "voterId": [],
+          "creatorId": "{{id}}",
+          "creatorName": "{{dname}}"
+        }
+    newPoll("/new/poll",poll);          // create new poll (url,data)
+    $("#close").click();                // close modal
+    clear();                            // clear form data *Not needed 
+  });
+
+  function clear(){
+    optsList = [];
+    $("#lst").html('');
+    $("#option").val('');
+    $("#topic").val("");
+}
+  // reset form
+  $("#reset").click(function(){
+    location.reload();
+  })
+
+
+  // poll-topic from server
+  var topics = "{{topics}}", ids = "{{ids}}", crtNames="{{crtNames}}"; 
+  topics = topics.split(",");       
+  ids    = ids.split(",");
+  crtNames= crtNames.split(",");
+  pollPanelNew("#panelGroup",ids,topics,crtNames);    // all polls display
+
+  apiCall("/api/polls");                              // get polls api 
+  apiCall("/api/users");                              // get users api 
+	</script>
+</body>
+</html>
