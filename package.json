@@ -1,0 +1,23 @@
+{
+  "name": "vote",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "consolidate": "^0.14.5",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.4",
+    "express-session": "^1.15.5",
+    "mongoose": "^4.11.7",
+    "nunjucks": "^3.0.1",
+    "passport": "^0.4.0",
+    "passport-twitter": "^1.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mgjean",
+  "license": "ISC"
+}
