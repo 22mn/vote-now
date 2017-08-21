@@ -5,6 +5,8 @@ body {
 	background-color: #fcfcfc;
 }
 
+
+
 /*Poll page quote*/
 blockquote {
 	text-align: center;
@@ -14,8 +16,22 @@ blockquote {
 }
 
 /* form2 */
+
+/* Add options */
+#edit {
+	margin-left: 100px;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+/*Twitter btn position*/
+#tweet {
+	position :absolute;
+	left: 430px;
+	top:40px;
+}
 .tpc { font-size: 18px;}
-#submit1 { margin-left: 200px;}
+#submit1 { margin-left: 100px;}
 #display{ margin-top: 10px;}
 
 .f2-lab {
