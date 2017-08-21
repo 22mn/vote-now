@@ -128,6 +128,17 @@ module.exports = function(app,passport){
 			})
 		})
 
+	app.route("/poll/:id/edit")
+		.post(function(req,res){
+			console.log(req.body);
+			Poll.findOneAndUpdate({_id:req.params.id},{$push:{"allVote":req.body}})
+						.exec(function(err,ok){
+							if (err) {console.log(err)};
+								console.log("Edited!");
+								res.send(ok);
+						});
+		});
+
 	app.route("/api/polls")           // all polls info send
 		.get(function(req,res){
 			Poll.find({},function(err,ok){
