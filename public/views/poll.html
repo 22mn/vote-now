@@ -22,7 +22,13 @@
             <span class="f2-lab"> Topic : </span><span class="pro-val">{{title}}</span>
  						<br><br>
 				</form>
+				
+				<span id="tweet"><a href="https://twitter.com/share" class="twitter-share-button" data-via="_mgjean">Tweet</a></span>
+				
+				<button class="btn btn-default btn-sm" data-toggle='modal' data-target='#emodal' id="edit" ><span class="glyphicon glyphicon-cog"></span>&nbsp;Edit</button>
+
 				<button type="button" class="btn btn-default" id="submit1">Submit</button>
+
 			</div>
 		</div>
 		<div class="col-xs-7" id="display">
@@ -31,7 +37,24 @@
 	</div>
 	<button class="btn btn-default" id="info" >
     <span class="glyphicon glyphicon-info-sign"></span>
-  </button>
+  	</button>
+  	<div class="modal fade" id="emodal">
+  		<div class='modal-dialog modal-sm'>
+  			<div class='modal-content'>
+  				<div class="modal-header">
+  					<button type="button" class="close" data-dismiss="modal">&times;</button>
+  					<p id="mtpc">Add Option</p>
+  				</div>
+  				<div class="modal-body">
+  					<input type="text" name="in-add" id="in-add">
+  					<button id="add" class="btn btn-default">Add</button>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+
+
+
 <script src="/public/js/helper.js"></script>
 <script>
 	
@@ -42,10 +65,12 @@
 	if ("{{user}}" === "false"){                   // log in check
 		$("#submit1").prop('disabled', true);
 		$("#submit1").prop("title","Login required!");
+		$("#edit").prop('disabled', true);
+		$("#edit").prop("title","Login required!");
 	}
 
-	var name = "{{optsList}}";                     // for radio inputs  
-	var count = "{{optsCount}}";                   // vote count for each opts 
+	var name = "{{optsList}}";                 // for radio inputs  
+	var count = "{{optsCount}}";               // vote count for each opts 
 
 	options = name.split(",");  
 	counts = count.split(",");
@@ -61,6 +86,13 @@
 		newPoll("/user/vote",{"optsName":value,"_id":poll_id,"voterId":user_id});
 	})
 
+	$("#add").click(function(){
+		var value = $("#in-add").val();
+		var id    = "{{poll_id}}"
+		var url   = "/poll/"+poll_id+"/edit";
+		$("#in-add").val("");
+		newPoll(url,{"optsName":value,"optsCount":0});
+	})
 
 	// check userId(twitterId) in voterId List 
 	$.ajax({
@@ -93,7 +125,18 @@
 			}
 	});
 	
+	
 
+	// twitter embedded tweet/share button function 
+	!function(d,s,id){
+			var js, fjs = d.getElementsByTagName(s)[0],
+			p = /^http:/.test(d.location)?'http':'https';
+			if (!d.getElementById(id)){	
+				js = d.createElement(s);
+				js.id = id;
+				js.src=p+'://platform.twitter.com/widgets.js';
+				fjs.parentNode.insertBefore(js,fjs);}}
+				(document, 'script', 'twitter-wjs');
 	
 
 </script>
