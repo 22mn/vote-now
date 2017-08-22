@@ -88,6 +88,7 @@
 
 	$("#add").click(function(){
 		var value = $("#in-add").val();
+		if (! value) {return;}
 		var id    = "{{poll_id}}"
 		var url   = "/poll/"+poll_id+"/edit";
 		$("#in-add").val("");
