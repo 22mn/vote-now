@@ -16,7 +16,8 @@
 	<div id="navi"></div>
 		<blockquote id="blkqut"></blockquote>
 	<div class="container">
-		<div class="col-xs-5" >
+		<div class="row">
+		<div class="col-sm-5 col-sm-offset-1" >
 			<div id="entry"><br>
 				<form id="form2">	   
             <span class="f2-lab"> Topic : </span><span class="pro-val">{{title}}</span>
@@ -25,15 +26,17 @@
 				
 				<span id="tweet"><a href="https://twitter.com/share" class="twitter-share-button" data-via="_mgjean">Tweet</a></span>
 				
-				<button class="btn btn-default btn-sm" data-toggle='modal' data-target='#emodal' id="edit" ><span class="glyphicon glyphicon-cog"></span>&nbsp;Edit</button>
-
 				<button type="button" class="btn btn-default" id="submit1">Submit</button>
 
-			</div>
+				<button class="btn btn-default btn-sm" data-toggle='modal' data-target='#emodal' id="edit" ><span class="glyphicon glyphicon-cog"></span>&nbsp;Edit</button>
+
+				
+			</div>	
 		</div>
-		<div class="col-xs-7" id="display">
+		<div class="col-sm-5 col-sm-offset-1" id="display">
 			<canvas id="chart" width="375px" height="375px"></canvas>
 		</div>
+	</div>
 	</div>
 	<button class="btn btn-default" id="info" >
     <span class="glyphicon glyphicon-info-sign"></span>
