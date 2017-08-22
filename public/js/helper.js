@@ -30,18 +30,18 @@ function newPoll(url,dataJson){
 function pollPanel(target,id,topic){
     for (var i=0; i<topic.length;i++){
         $(target).prepend("<div class='panel panel-default'>"+
-        "<div class='panel-heading'><a href='/poll/"+
-        id[i]+"'>"+topic[i]+"</a><span class='del'><a href='drop/"+id[i]
-        +"'><span class='glyphicon glyphicon-trash'></span>&nbsp;delete</a></span></div></div>");
+        "<div class='panel-heading'><div class='container'><div class='col-xs-7'><a href='/poll/"+
+        id[i]+"'>"+topic[i]+"</a></div><div class='col-xs-5'><span class='del'><a href='drop/"+id[i]
+        +"'><span class='glyphicon glyphicon-trash'></span>&nbsp;delete</a></span></div></div></div>");
     }
 }
 // polls home page panel 
 function pollPanelNew(target,id,topic,dname){
     for (var i=0; i<topic.length;i++){
         $(target).prepend("<div class='panel panel-default'>"+
-        "<div class='panel-heading'><span class='pro-val'><a href='/poll/"+
-        id[i]+"'>"+topic[i]+"</a></span><span class='plate'><span class='pal-lab'>created by : </span><span class='pal-val'><a target='_blank' href='https://twitter.com/"+dname[i]
-        +"'>"+dname[i]+"</a></span></span</div></div>");
+        "<div class='panel-heading'><div class='container'><div class='col-xs-7'><span class='pro-val'><a href='/poll/"+
+        id[i]+"'>"+topic[i]+"</a></span></div><div class='col-xs-5'><span class='plate'><span class='pal-lab'>created by : </span><span class='pal-val'><a target='_blank' href='https://twitter.com/"+dname[i]
+        +"'>"+dname[i]+"</a></span></span></div></div></div></div>");
     }
 }
 
@@ -59,6 +59,7 @@ function chart(id,topic,options,counts){
         }]
     },
   options:{
+        responsive:false,
         maintainAspectRatio:false,
         title: {
             display: false,
