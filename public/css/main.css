@@ -5,8 +5,6 @@ body {
 	background-color: #fcfcfc;
 }
 
-
-
 /*Poll page quote*/
 blockquote {
 	text-align: center;
@@ -15,23 +13,9 @@ blockquote {
 	color: #444444;
 }
 
-/* form2 */
-
-/* Add options */
-#edit {
-	margin-left: 100px;
-	text-decoration: none;
-	font-size: 14px;
-}
-
-/*Twitter btn position*/
-#tweet {
-	position :absolute;
-	left: 430px;
-	top:40px;
-}
+/*form2*/
 .tpc { font-size: 18px;}
-#submit1 { margin-left: 100px;}
+
 #display{ margin-top: 10px;}
 
 .f2-lab {
@@ -48,8 +32,7 @@ blockquote {
 #entry {
 	margin-top: 20px;
 	background-color: #f8f8f8;
-	width: 500px;
-	height: 200px;
+	/*height: 200px;*/
 	padding-left: 20px;
 }
 
@@ -77,9 +60,6 @@ header {
 
 /*create new poll btn*/
 #close {
-	position: absolute;
-	right: 120px;
-	top:75px;
 	color:#6688bb;
 }
 #close:hover {
@@ -90,8 +70,11 @@ header {
 
 /* panels */
 .pnl-hder {
-	font-size: 24px;
+	font-size: 20px;
 	color: #6688aa;
+	text-align: center;
+	text-decoration: overline;
+	font-variant: small-caps;
 }
 
 .forpanel {
@@ -104,10 +87,6 @@ header {
 	text-align: center;
 }
 
-.plate,.del {
-	position: fixed;
-	right : 150px;
-}
 .pal-lab{
 	font-size: 15px;
 	color: #999999;
@@ -116,8 +95,7 @@ header {
 
 /* profile => userinfo box*/
 
-.well-md {
-	height:70px;
+.well-md {	
 	text-align: center;
 }
 
@@ -143,9 +121,20 @@ header {
 /* modal */
 #mhead { text-align: center;}
 
-/* form */
-#submit, #reset { margin-left: 200px;}
-#create { margin-left: 100px;}
+/* form form2*/
+#submit, #reset { margin-left: 25px;}
+#create { margin-left: 12px;}
+
+#submit1, #edit { margin-left: 50px;}
+#tweet { margin-left: 10px;}
+
+@media only screen and (max-width:380px){
+	body {background-color: #ee6677;}
+	#submit{margin-left: 20px;}
+	#create{margin-left:20px;}
+	#reset{margin-left: 100px;}
+	#submit1,#tweet,#edit{margin-left: 2px;}
+}
 
 /*add options*/
 #lst li {
