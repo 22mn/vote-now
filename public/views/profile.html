@@ -13,14 +13,21 @@
 <body>
 	<div id="navigate"></div>
 	<div class="container">
-		<div class= "well well-md">
-			<span class="pro-lab">Name :</span><span class="pro-val"><a target="_blank" href="https://twitter.com/{{dname}}">{{name}}</a></span>
-			<span class="pro-lab">ID :</span><span class="pro-val"> {{id}}</span>
-			<span class="pro-lab">Location :</span><span class="pro-val"> {{location}}</span>
+		
+		<div class= "well">
+			<div class='row'>
+			<div class="col-xs-4">
+				<span class="pro-lab">Name :</span><span class="pro-val"><a target="_blank" href="https://twitter.com/{{dname}}">{{name}}</a></span></div>
+			<div class="col-xs-4">			   
+				<span class="pro-lab">ID :</span><span class="pro-val"> {{id}}</span></div>
+			<div class="col-xs-4">   
+				<span class="pro-lab">Location :</span><span class="pro-val"> {{location}}</span></div>
+
+			</div>
 		</div>
 	</div>
 	<div class= "container forpanel">
-    	<p class="pnl-hder">my polls</p>
+    	<p class="pnl-hder">My Polls</p>
     	<div class="panel-group" id="panelGroup1"></div>	
   	</div>
   	<button class="btn btn-default" id="info" >
